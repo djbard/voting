@@ -3,7 +3,7 @@ import math, sys
 
 
 def vote(vote_file):
-    
+    cand_names = []
 ## how many voters? 
     nvoters = 0
     for line in open(vote_file):
@@ -11,11 +11,17 @@ def vote(vote_file):
         if len(cols)<4: ## in case there are newlines at the end of the file
             continue
         if cols[0]=="Vote_id":
+            cand_names.append(cols[1])
+            cand_names.append(cols[2])
+            cand_names.append(cols[3][:-1]) ## avoid carriage return
             continue
         nvoters+=1
 
     print "number of voters:", nvoters
-
+    print "Candidate A is", cand_names[0]
+    print "Candidate B is", cand_names[1]
+    print "Candidate C is", cand_names[2]
+    
 ## set up the votes
     votes = []
     for i in range(nvoters):
@@ -114,7 +120,8 @@ def vote(vote_file):
           
 
 ##################### right! who won?
-
+    winner = -100
+            
     print "# voters:", nvoters, ", # candidate first place votes:", n1, ", and # 'no preference' first place votes:", n1no
 
 ## is there a clear first-round winner?
@@ -127,11 +134,11 @@ def vote(vote_file):
     
     print "first round votes: A:", a_1, ", B:", b_1, ", C:", c_1
     if a_1>=majority:
-        print "*** Candidate A is the clear winner! *** \n (with", a_1, "votes)"
+        print "*** Candidate A ("+cand_names[0]+") is the clear winner! *** \n (with", a_1, "votes)"
     elif b_1>=majority:
-        print "*** Candidate B is the clear winner! ***\n (with", b_1, "votes)"
+        print "*** Candidate B ("+cand_names[1]+") is the clear winner! ***\n (with", b_1, "votes)"
     elif c_1 >=majority:
-        print "*** Candidate C is the clear winner! ***\n (with", c_1, "votes)"
+        print "*** Candidate C ("+cand_names[2]+") is the clear winner! ***\n (with", c_1, "votes)"
     else:
         print "no candidate has the overall majority! Let's drop one of them. "
 
@@ -233,7 +240,7 @@ def vote(vote_file):
                 if a_2>b_2:
                     print "Candidate B has the least second-place votes"
                     drop = "b"
-                elif b_2<a_2:
+                elif b_2>a_2:
                     print "Candidate A has the least second-place votes"
                     drop = "a"
                 else:
@@ -279,25 +286,25 @@ def vote(vote_file):
             majority2 = math.ceil((b_11 + c_11+1)/2.)
             print "the majority required to win in this round is:", majority2
             if b_11>=majority2:
-                print "*** Candidate B is the winner! ***\n (with", b_11, "votes)"
+                print "*** Candidate B ("+cand_names[1]+") is the winner! ***\n (with", b_11, "votes)"
             elif c_11>=majority2:
-                print "*** Candidate C is the winner! ***\n (with", c_11, "votes)"
+                print "*** Candidate C ("+cand_names[2]+") is the winner! ***\n (with", c_11, "votes)"
             else:
                 print "no candidate has the overall majority! which one had the least first-round votes? "
         ## find which cand had the most first round votes - they win.
         ####
                 if b_1>c_1:
-                    print "*** Candidate B is the winner! *** \n (with", b_11, " total votes and", b_1, "initial first-round votes)"
+                    print "*** Candidate B ("+cand_names[1]+") is the winner! *** \n (with", b_11, " total votes and", b_1, "initial first-round votes)"
                 elif c_1>b_1:
-                    print "*** Candidate C is the winner! *** \n (with", c_11, " total votes and", c_1, "initial first-round votes)"
+                    print "*** Candidate C ("+cand_names[2]+") is the winner! *** \n (with", c_11, " total votes and", c_1, "initial first-round votes)"
                 else:
                 ## go to second-place initial votes.
                     print "Both B and C have the same inital first-place votes; moving to second-place votes"
                 
                     if b_2>c_2:
-                        print "*** Candidate B is the winner! *** \n (with", b_11, " total votes,", b_1, "initial first-round votes and", b_2, "initial second-round votes)"
+                        print "*** Candidate B ("+cand_names[1]+") is the winner! *** \n (with", b_11, " total votes,", b_1, "initial first-round votes and", b_2, "initial second-round votes)"
                     elif c_2>b_2:
-                        print "*** Candidate C is the winner! *** \n (with", c_11, " total votes,", c_1, "initial first-round votes and", c_2, "initial second-place votes)"
+                        print "*** Candidate C ("+cand_names[2]+") is the winner! *** \n (with", c_11, " total votes,", c_1, "initial first-round votes and", c_2, "initial second-place votes)"
                     else:
                         print "B and C have the same second-place votes"
                         print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! need another election!!!!!!!!!!!!!!!!!!!!!!"
@@ -309,26 +316,26 @@ def vote(vote_file):
             majority2 = math.ceil((a_11 + c_11+1)/2.)
             print "the majority required to win in this round is:", majority2
             if a_11>=majority2:
-                print "*** Candidate Ais the winner! ***\n (with", a_11, "votes)"
+                print "*** Candidate A ("+cand_names[0]+") is the winner! ***\n (with", a_11, "votes)"
             elif c_11>=majority2:
-                print "*** Candidate C is the winner! ***\n (with", c_11, "votes)"
+                print "*** Candidate C ("+cand_names[2]+") is the winner! ***\n (with", c_11, "votes)"
             else:
                 print "no candidate has the overall majority! which one had the least first-round votes? "
             
         ## find which cand had the most first round votes - they win.
         ####
                 if a_1>c_1:
-                    print "*** Candidate A is the winner! *** \n (with", a_11, " total votes and", a_1, "initial first-round votes)"
+                    print "*** Candidate A ("+cand_names[0]+") is the winner! *** \n (with", a_11, " total votes and", a_1, "initial first-round votes)"
                 elif c_1>a_1:
-                    print "*** Candidate C is the winner! *** \n (with", c_11, " total votes and", c_1, "initial first-round votes)"
+                    print "*** Candidate C ("+cand_names[2]+") is the winner! *** \n (with", c_11, " total votes and", c_1, "initial first-round votes)"
                 else:
                 ## go to second-place initial votes.
                     print "Both A and C have the same inital first-place votes; moving to second-place votes"
                     
                     if a_2>c_2:
-                        print "*** Candidate A is the winner! *** \n (with", a_11, " total votes,", a_1, "initial first-round votes and", a_2, "initial second-round votes)"
+                        print "*** Candidate A ("+cand_names[0]+") is the winner! *** \n (with", a_11, " total votes,", a_1, "initial first-round votes and", a_2, "initial second-round votes)"
                     elif c_2>a_2:
-                        print "*** Candidate C is the winner! *** \n (with", c_11, " total votes,", c_1, "initial first-round votes and", c_2, "initial second-place votes)"
+                        print "*** Candidate C ("+cand_names[2]+") is the winner! *** \n (with", c_11, " total votes,", c_1, "initial first-round votes and", c_2, "initial second-place votes)"
                     else:
                         print "A and C have the same second-place votes"
                         print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! need another election!!!!!!!!!!!!!!!!!!!!!!"
@@ -340,27 +347,27 @@ def vote(vote_file):
             majority2 = math.ceil((a_11 + b_11+1)/2.)
             print "the majority required to win in this round is:", majority2
             if a_11>=majority2:
-                print "*** Candidate Ais the winner! ***\n (with", a_11, "votes)"
+                print "*** Candidate A ("+cand_names[0]+") is the winner! ***\n (with", a_11, "votes)"
             elif b_11>=majority2:
-                print "*** Candidate B is the winner! ***\n (with", b_11, "votes)"
+                print "*** Candidate B ("+cand_names[1]+") is the winner! ***\n (with", b_11, "votes)"
             else:
                 print "no candidate has the overall majority! which one had the least first-round votes? "
             
         ## find which cand had the most first round votes - they win.
         ####
                 if a_1>b_1:
-                    print "*** Candidate A is the winner! *** \n (with", a_11, " total votes and", a_1, "initial first-round votes)"
+                    print "*** Candidate A ("+cand_names[0]+") is the winner! *** \n (with", a_11, " total votes and", a_1, "initial first-round votes)"
                 elif b_1>a_1:
-                    print "*** Candidate B is the winner! *** \n (with", b_11, " total votes and", b_1, "initial first-round votes)"
+                    print "*** Candidate B ("+cand_names[1]+") is the winner! *** \n (with", b_11, " total votes and", b_1, "initial first-round votes)"
                     
                 else:
                 ## go to second-place initial votes.
                     print "Both A and B have the same inital first-place votes; moving to second-place votes" 
                     
                     if a_2>b_2:
-                        print "*** Candidate A is the winner! *** \n (with", a_11, " total votes,", a_1, "initial first-round votes and", a_2, "initial second-round votes)"
+                        print "*** Candidate A ("+cand_names[0]+") is the winner! *** \n (with", a_11, " total votes,", a_1, "initial first-round votes and", a_2, "initial second-round votes)"
                     elif b_2>a_2:
-                        print "*** Candidate B is the winner! *** \n (with", b_11, " total votes,", b_1, "initial first-round votes and", b_2, "initial second-place votes)"
+                        print "*** Candidate B ("+cand_names[1]+") is the winner! *** \n (with", b_11, " total votes,", b_1, "initial first-round votes and", b_2, "initial second-place votes)"
                     else:
                         print "A and B have the same second-place votes"
                         print "!!!!!!!!!!!!!!!!!!!!!!!!!!! need another election!!!!!!!!!!!!!!!!!!!!!!"
