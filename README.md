@@ -17,12 +17,12 @@ How it works:
 The vote file formats are quite specific - they should be in csv format with the first line giivng the candidate names, and subsequent lines giving the voter ID, and their preferences. A 'no preference' vote is a 0 or no entry. 
 For example:
 
-Voter_ID,CandA,CandB,CandC
-Voter1,1,2,3
-Voter2,3,1,2
-Voter3,2,3,1
-Voter4,1,,, 
-Voter5,3,,,
+	Voter_ID,CandA,CandB,CandC
+	Voter1,1,2,3
+	Voter2,3,1,2
+	Voter3,2,3,1
+	Voter4,1,,, 
+	Voter5,3,,,
 
 I have included one simple example of election results (test_votes.csv) which illustrates a couple of tie-break scenarios: Candidate A is eliminated in the first round, then candidates B and C are tied for first place in the second round. C wins that tiebreaker based on the number of initial first-round votes. 
 
