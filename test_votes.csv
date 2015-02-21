@@ -1,0 +1,7 @@
+Vote_id,candidate_A,candidate_B,candidate_C
+Voter_I  ,1,2,3
+Voter_II ,,1,
+Voter_III,3,1,2
+Voter_IV ,2,3,1
+Voter_V  ,,,1
+Voter_VI ,,,1
