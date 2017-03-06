@@ -290,7 +290,7 @@ def vote(vote_file):
             ## make sure I get the right cand idx that was dropped - looking at the full list of cands
             drop_no2 = 0
             for kk in range(4):
-                if cands[kk]==cands2_2nd[idx2_2[0]]:
+                if cands[kk]==cands2[drop_no_2]:
                     drop_no2 = kk
 
             a_21 = a_11
@@ -311,7 +311,7 @@ def vote(vote_file):
                     tmp2.append(cands[i])
             print "Remaining candidates: ", tmp2
             print "They have votes:", tmp
-            print "Looking for second-place votes to take from candidate", cands2_2nd[idx2_2[0]], " and give to candidates", tmp2
+            print "Looking for second-place votes to take from candidate", cands2[drop_no2], " and give to candidates", tmp2
             
             for i in range(nvoters):
                 if  votes[i][drop_no2]==1:
@@ -349,8 +349,10 @@ def vote(vote_file):
             print "the majority required to win in this round is:", majority3
             if count3[0]>majority3:
                 print "**** winner is: ", cands3[0]
+                print "(reminder: cand names: ", cand_names
             elif count3[1]>majority3:
                 print "**** winner is: ", cands3[1]
+                print "(reminder: cand names: ", cand_names
             else:
                 print "tie-break in third round - dropping the candidate with the least second-place votes..."
                 ## OK, there's no clear winner with the re-assigned votes. Someone needs to get dropped!
